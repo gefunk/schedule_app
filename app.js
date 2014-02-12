@@ -2,7 +2,6 @@
 /**
  * Module dependencies.
  */
-
 var express = require('express');
 var routes = require('./routes');
 var user = require('./routes/user');
@@ -13,14 +12,28 @@ var http = require('http');
 var path = require('path');
 
 // Mongodb connection
-var mongo = require('mongodb');
-var mongodb = new mongo.Db('schedules', new mongo.Server('localhost',27017), {safe:false});
+var MongoClient = require('mongodb').MongoClient
+var mongourl = null;
+
+// load express
+var app = express();
+
+// set mongo client
+if ('development' == app.get('env')) {
+	app.use(express.errorHandler());
+	app.disable('etag');
+	mongourl = 'mongodb://127.0.0.1:27017/schedules';
+}else if('production' == app.get('env')){
+	mongourl = 'mongodb://schedules_scraper:T49Sq8aQ5LI8y4C@mongo.amfitir.com:27017/schedules'
+}
 
 /*
 * open connection to mongo
 */
-mongodb.open(function(err, mongodb){
-	var app = express();
+MongoClient.connect(mongourl, function(err, mongodb){
+	if(err) throw err;
+	
+	// successfull mongo connection load app
 
 	// all environments
 	app.set('port', process.env.PORT || 3000);
@@ -36,12 +49,6 @@ mongodb.open(function(err, mongodb){
 	app.use(app.router);
 	app.use(express.static(path.join(__dirname, 'public')));
 
-	console.log("Environemnt", app.get('env'));
-	// development only
-	if ('development' == app.get('env')) {
-	  app.use(express.errorHandler());
-	  app.disable('etag');
-	}
 
 	app.get('/', routes.index);
 	app.get('/users', user.list);
