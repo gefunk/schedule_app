@@ -3,7 +3,7 @@
 exports.lookup = function(db){
 	return function(req, res){
 		/** get all the parameters **/
-		var carrier, vessel, voyage, start_port, end_port, start_date = undefined;
+		var carrier, vessel, voyage, start_port, end_port, start_date, end_date = undefined;
 		
 		var query = {};
 		var projection = {};
@@ -22,6 +22,13 @@ exports.lookup = function(db){
 			var dateParts = strDate.split("-");
 			start_date = new Date(dateParts[0], (dateParts[1] - 1), dateParts[2]);
 		} 
+		if(req.body.end_date != undefined){
+			// date expected to be passed in as YYYY-MM-DD
+			var strDate = req.body.end_date;
+			var dateParts = strDate.split("-");
+			end_date = new Date(dateParts[0], (dateParts[1] - 1), dateParts[2]);
+		} 
+		
 		
 		
 		var schedules = db.collection("schedules");
@@ -75,27 +82,30 @@ exports.lookup = function(db){
 												// if we found the start port before 
 												// we find the end port
 												// then we want to add it to the list
-												if(start_port_found && (end_port_eta > start_port_etd)){
-									
-													route_data.push(ports[pindex]);
+												if(start_port_found && (end_port_eta > start_port_etd)
+													&& (start_date == undefined || (start_date < start_port_etd))
+													&& (end_date == undefined || (end_date > end_port_eta))){
+													
+													// assemble the route
+													route_data.push(ports[pindex]);		
+													// add to response
+													response_data.push(
+														{
+															"carrier":docs[doc]['carrier'],
+															"voyage":voyages[voyage]['voyage'],
+															"update_date":docs[doc]['scrape_date'],
+															"source":docs[doc]['url'],
+															"vessel": docs[doc]['vessel'],
+															"route":route_data
+														}
+													);
 											
-													// if start date exists, then add this 
-													// element to the response
-													if(start_date == undefined || 
-														(start_date < route_data[0].eta)){
-															response_data.push(
-																{
-																	"carrier":docs[doc]['carrier'],
-																	"voyage":voyages[voyage]['voyage'],
-																	"update_date":docs[doc]['scrape_date'],
-																	"vessel": docs[doc]['vessel'],
-																	"route":route_data
-																}
-															);
-													}
-											
-												}
-												break;
+												}// end start_port found
+												/* 
+												no need to continue processing rest of schedule 
+												we found the start and end ports already
+												*/
+												break; 
 											}
 							
 											// start port is found so add it to the collection
