@@ -1,5 +1,454 @@
 extends layout
 
-block content
-  h1= title
-  p Welcome to #{title}
+block content   
+    // Scroll To Top
+    a#toTop(href='#top')
+    // HEADER SECTION
+    header
+      // Start of Header - full width area with class for the headroom JS hiding
+      .header.navbar-fixed-top
+        // Start of Header Container - the content div that is a set width and centralized
+        .header-container
+          // Logo - it's the logo image
+          .logo
+            img(src='/images/logo.png', alt='top logo')
+          // End of Logo
+          // Menu - You can pretty much guess that the menu div is where the menu is contained
+          .menu
+            ul
+              li
+                a.cta(href='#') Buy Now
+              li
+                a(href='#') About Us
+              li
+                a(href='#') Support
+          // End of Menu
+        // End of Header Container
+      // End of Header
+    // TOP SECTION
+    // Start of Background - the top image that gets covered when you scroll
+    #background
+      // Start of Shade - this is the css based gradient over the image for that cool effect
+      .shade
+        // Start of Main Title + Intro
+        .huge-title
+          h1 Flexi Landing Page.
+          h4 Unlimited Possibilities. Modular Design.
+          // Start of Owl Carousel - The carousel can contain anything in each DIV and you can add more but change the settings at the bottom of the page for number of items
+          .testimonials.owl-carousel
+            div
+              // Start of Slide 1
+              .button-box
+                a.button-white(href='#')
+                  i.icon-appstore
+                  | Download Free
+            div
+              // Start of Slide 2
+              .button-box
+                a.button-white(href='#')
+                  i.icon-android
+                  | Download Free
+            div
+              // Start of Slide 3
+              .button-box
+                a.button-white(href='#')
+                  i.icon-windows
+                  | Download Free
+          // End of Carousel
+        // End of Main Title + Intro
+        // Start of Scroll Down Message and animation
+        #godown.floating
+          p Read On. Scroll Down.
+          img(src='/images/godown.png', alt='down')
+        // End of Scroll Down Message and animation
+      // End of Shade
+    // End of Background
+    // INTRO SECTION
+    // Start of Wrapper - the full width container
+    .wrapper
+      // Start of Container - we use this for parallax on scroll
+      .container
+        // Start of Content - where the content be
+        .content
+          // Start of Hero - The main top image like a phone etc
+          .hero
+            img#phone(src='/images/phone.png', alt='phone')
+          // End of Hero
+          .mobileSpace
+          h2 Flexi Landing Page.
+          h4 This is a small sub title
+          p
+            | Proin at eros non eros adipiscing mollis. Donec semper turpis sed diam. Sed consequat ligula nec tortor. Integer eget sem. Ut vitae enim eu est vehicula gravida.
+          .button-box
+            a.button(href='#') Beautifully clean buttons
+          .bigspace
+        // End of Content
+        // 3 COLUMN SECTION
+        // Start of Grey Container - the full width container
+        .greycontainer
+          // Start of Content - where the content be
+          .content
+            h2 3 Column Section.
+            p
+              | This simple 3 column example can be used to outline benefits to the consumer on purchasing your app, product, or service.
+            // Start of 3 rows
+            .one_third
+              img(src='/images/icon5.png', alt='icon 5')
+              h2 Responsive
+              p
+                | Epsum factorial non deposit quid pro quo hic escorol. Olypian quarrels et gorilla congolium sic ad nauseum.
+            .one_third
+              img(src='/images/icon6.png', alt='Icon 6')
+              h2 Modular
+              p
+                | Epsum factorial non deposit quid pro quo hic escorol. Olypian quarrels et gorilla congolium sic ad nauseum.
+            .one_third_last
+              img(src='/images/icon7.png', alt='Icon 7')
+              h2 Adaptive
+              p
+                | Epsum factorial non deposit quid pro quo hic escorol. Olypian quarrels et gorilla congolium sic ad nauseum.
+            // End of 3 rows
+          // End of Content
+        // End of Grey Container
+        // RESPONSIVE CAROUSEL SECTION
+        // Start of White Container - the full width container
+        .whitecontainer
+          // Start of Content - where the content be
+          .content
+            h2 Responsive Carousel.
+            p
+              | The fully responsive
+              a(href='https://github.com/OwlFonk/OwlCarousel') Owl Carousel
+              | is also touch enabled for devices such as smart phones and tablets. The carousel will accept any content such as images, styled divs, text blocks or anything else you can create.
+            .bigspace
+            // Start of Owl Carousel - The carousel can contain anything in each DIV and you can add more but change the settings at the bottom of the page for number of items
+            .owl-example.owl-carousel
+              div
+                a.fancybox(href='/images/phone_small3.png', rel='group')
+                  img(src='/images/phone_small3.png', alt='phone 1')
+              div
+                a.fancybox(href='/images/phone_small2.png', rel='group')
+                  img(src='/images/phone_small2.png', alt='phone 2')
+              div
+                a.fancybox(href='/images/phone_small1.png', rel='group')
+                  img(src='/images/phone_small1.png', alt='phone 3')
+              div
+                a.fancybox(href='/images/phone_small2.png', rel='group')
+                  img(src='/images/phone_small2.png', alt='phone 4')
+              div
+                a.fancybox(href='/images/phone_small3.png', rel='group')
+                  img(src='/images/phone_small3.png', alt='phone 5')
+            // End of Carousel
+            p
+              strong
+                i
+                  | The carousel supports lightbox triggered images - give it a try!
+                  br
+                  | With a host of available options you can tweak to your own requirements.
+          // End of Content
+        // End of White Container
+        // RESPONSIVE VIDEO SECTION
+        // Start of Grey Container - the full width container
+        .greycontainer
+          // Start of Content - where the content be
+          .content
+            h2 Responsive video embeds.
+            p
+              | Using the freely available
+              a(href='http://fitvidsjs.com') FitVids.js plugin
+              | for JQuery means that embedding your videos from your favorite service such as Vimeo, or Youtube etc. is as simple as wrapping the embed code in a single containing element that will automagically convert your video to be fully responsive and looking amazing on any device.
+            .button-box
+              a.button-reverse(href='#') Reverse Button
+            .bigspace
+            .video-container
+              iframe(src='http://player.vimeo.com/video/83187924?title=0&byline=0&portrait=0', width='800', height='450', frameborder='0', webkitallowfullscreen='webkitallowfullscreen', mozallowfullscreen='mozallowfullscreen', allowfullscreen='allowfullscreen')
+            p.caption
+              | Caption styling is also included and styled for
+              a(href='#') links also
+          // End of Content
+        // End of Grey Container
+        // FONTS SECTION
+        // Start of White Container - the full width container
+        .whitecontainer
+          // Start of Content - where the content be
+          .content
+            h2 Super legible fonts.
+            p
+              | The super clean
+              a(href='http://www.google.com/fonts/specimen/Raleway') Raleway
+              | , and
+              a(href='https://www.google.com/fonts/specimen/Merriweather') Merriweather
+              | fonts from Google produce super clean, legible text.
+            blockquote
+              p
+                | The content width, line spacing and font size follow the golden ratio formula for optimal reading on any device.
+            p
+              | Titles are appropriately sized and are darker giving a good visual hierachy to your page and content. With the light background and not-quite-so-dark font color it's also easy on the eyes for reading making your copy pop, and your message stand-out.
+            .button-box
+              a.button(href='#') Standard Button
+          // End of Content
+        // End of White Container
+        // IMAGE RIGHT TEXT LEFT SECTION
+        // Start of Grey Container - the full width container
+        .greycontainer
+          // Start of Content - where the content be
+          .content
+            // Start of Half Column 1 - 50% width on the left side
+            .half_column1
+              h3 Image right. Text left.
+              .icon_left
+                img(src='/images/icon1.png')
+              .text_right.clearfix
+                h5 Retina Support
+                p Don't serve  double sized images to everyone - we use retina.js for that!
+              .icon_left
+                img(src='/images/icon2.png')
+              .text_right.clearfix
+                h5 Lightbox Enanbled
+                p
+                  | The image on the right is clickable to a larger view using the supplied lightbox!
+              p.caption
+                | We can use caption styling as a byline or notification with
+                a(href='#') links also
+                | .
+            // End of Half Column 1
+            // Start of Half Column 2 - 50% width on the right side
+            .half_column2
+              a.fancybox(href='/images/phone_small4.png')
+                img(src='/images/phone_small4.png', alt='small phone')
+            // End of Half Column 2
+          // End of Content
+        // End of Grey Container
+        // IMAGE LEFT TEXT RIGHT SECTION
+        // Start of White Container - the full width container
+        .whitecontainer
+          // Start of Content - where the content be
+          .content
+            // Start of Half Column 1 - 50% width on the left side
+            .half_column1
+              a.fancybox(href='/images/phone_small0.png')
+                img(src='/images/phone_small0.png', alt='small phone 1')
+            // End of Half Column 1
+            // Start of Half Column 2 - 50% width on the right side
+            .half_column2
+              h3 Image left. Text right.
+              .icon_left
+                img(src='/images/icon3.png')
+              .text_right.clearfix
+                h5 Modular Design
+                p Using this module you can have an image on the left and your text on the right.
+              .icon_left
+                img(src='/images/icon4.png')
+              .text_right.clearfix
+                h5 Lightbox Enanbled
+                p The image on the left is clickable to a larger view using the supplied lightbox!
+              p.caption
+                | We can use caption styling as a byline or notification with
+                a(href='#') links also
+                | .
+            // End of Half Column 2
+          // End of Content
+        // End of White Container
+        // TESTIMONIALS SECTION
+        // Start of Grey Container - the full width container
+        .greycontainer
+          // Start of Content - where the content be
+          .content
+            h2 Beautiful Testimonials.
+            p
+              | Hovering your mouse over the testimonials will pause the automatic sliding. These and many more options are easily set using simple settings in the javascript. This is also touch enabled for swiping!
+            .bigspace
+            // Start of Owl Carousel - The carousel can contain anything in each DIV and you can add more but change the settings at the bottom of the page for number of items
+            .testimonials.owl-carousel
+              div
+                blockquote
+                  p
+                    | The content width, line spacing and font size follow the golden ratio formula for optimal reading on any device.
+                  cite Jonathan Atkinson
+              div
+                blockquote
+                  p The content width, line spacing and font size follow the golden ratio formula.
+                  cite Jonathan Atkinson
+              div
+                blockquote
+                  p The content width, line spacing
+                  cite Jonathan Atkinson
+              div
+                blockquote
+                  p
+                    | The content width, line spacing and font size follow the golden ratio formula for optimal.
+                  cite Jonathan Atkinson
+            // End of Carousel
+          // End of Content
+        // End of Grey Container
+        // GALLERY SECTION
+        // Start of White Container - the full width container
+        .whitecontainer
+          // Start of Content - where the content be
+          .content
+            h2 Gallery Section.
+            p
+              | Display as many or as little images as you wish using the gallery module. This 3 column section can be stacked multiple times to provide a huge amount of images if required.
+            p Lightbox powered means larger images are just a click away.
+            p
+              | These images are contained in a group meaning that your user can click any image and then go back and forwards through each one in the lightbox.
+            // Start of 3 rows
+            .one_third
+              a.fancybox(href='/images/screen1.jpg', rel='group2')
+                img(src='/images/screen1.jpg', alt='small phone 2')
+              p.caption
+                | Caption styling is also included and styled for
+                a(href='#') links also
+            .one_third
+              a.fancybox(href='/images/screen2.jpg', rel='group2')
+                img(src='/images/screen2.jpg', alt='small phone 3')
+              p.caption
+                | Caption styling is also included and styled for
+                a(href='#') links also
+            .one_third_last
+              a.fancybox(href='/images/screen3.jpg', rel='group2')
+                img(src='/images/screen3.jpg', alt='small phone 4')
+              p.caption
+                | Caption styling is also included and styled for
+                a(href='#') links also
+            // End of 3 rows
+            // Start of 3 rows
+            .one_third
+              a.fancybox(href='/images/screen4.jpg', rel='group2')
+                img(src='/images/screen4.jpg', alt='small phone 5')
+              p.caption
+                | Caption styling is also included and styled for
+                a(href='#') links also
+            .one_third
+              a.fancybox(href='/images/screen5.jpg', rel='group2')
+                img(src='/images/screen5.jpg', alt='small phone 6')
+              p.caption
+                | Caption styling is also included and styled for
+                a(href='#') links also
+            .one_third_last
+              a.fancybox(href='/images/screen6.jpg', rel='group2')
+                img(src='/images/screen6.jpg', alt='small phone 7')
+              p.caption
+                | Caption styling is also included and styled for
+                a(href='#') links also
+            // End of 3 rows
+          // End of Content
+        // End of White Container
+        // PRICING TABLE SECTION
+        // Start of Grey Container - the full width container
+        .greycontainer
+          // Start of Content - where the content be
+          .content
+            h2 Pricing Table.
+            p
+              | This handy 3 stage pricing table is constructed purely from CSS giving you full control over alignment, fonts, colors and widths.
+            .price-tier
+              .tier.free
+                .header
+                  h5 Free
+                ul
+                  li Basic Features
+                  li Basic Support
+                  li 100% Free
+                .prices
+                  h6 Free
+              .tier.pro
+                .header
+                  h5 Pro
+                ul
+                  li Unlimited Everything
+                  li Unlimited Support
+                  li Unlimited Access
+                  li Unlimited Users
+                  li Extra Features
+                .prices
+                  h6
+                    .money $
+                    | 9
+                    sup Per Month
+                  span or
+                  h6
+                    .money $
+                    | 99
+                    sup Per Year
+              .tier.plus
+                .header
+                  h5 Plus
+                ul
+                  li Everything from Free
+                  li 1hr Support
+                  li Extra Pro Features
+                .prices
+                  h6
+                    .money $
+                    | 5
+                    sup Per Month
+                  span or
+                  h6
+                    .money $
+                    | 49
+                    sup Per Year
+              .create-cta
+                a.button-reverse(href='#') Start today
+            // End of Price Tier
+          // End of Content
+        // End of Grey Container
+        // NEWSLETTER SIGNUP SECTION
+        // Start of White Container - the full width container
+        .whitecontainer
+          // Start of Content - where the content be
+          .content
+            h2 MailChimp signup form
+            p
+              | Adding your own MailChimp powered email sign-up is super simple. Grab the code from your MailChimp account and drop the code here - all styling is within our stylesheet.
+            // Begin MailChimp Signup Form
+            #mc_embed_signup
+              form#mc-embedded-subscribe-form.validate(action='http://theaterwebsiteservices.us1.list-manage2.com/subscribe/post?u=43eb07415b1fcbc6dec136bca&id=a5303b1b65', method='post', name='mc-embedded-subscribe-form', target='_blank', novalidate='novalidate')
+                input#mce-EMAIL.email(type='email', value='', name='EMAIL', placeholder='email address', required='required')
+                // real people should not fill this in and expect good things - do not remove this or risk form bot signups
+                div(style='position: absolute; left: -5000px;')
+                  input(type='text', name='b_43eb07415b1fcbc6dec136bca_a5303b1b65', value='')
+                .clear
+                  input#mc-embedded-subscribe.button(type='submit', value='Subscribe', name='subscribe')
+            // End mc_embed_signup
+            p.caption We never share your information or use it to spam you.
+          // End of Content
+        // End of White Container
+        // FOLLOW SECTION
+        // Start of Grey Container - the full width container
+        .greycontainer
+          // Start of Content - where the content be
+          .content
+            h2 Follow us.
+            p
+              | The social icons are powered by the Zocial icon from
+              a(href='http://fontello.com') Fontello
+              | which means you have full control to change colors, size, opacity etc. and have
+              strong 102 icons
+              | covering most if not all the social networks.
+            a(href='#')
+              i.icon-gplus
+            a(href='#')
+              i.icon-pinterest
+            a(href='#')
+              i.icon-facebook
+            a(href='#')
+              i.icon-twitter
+            a(href='#')
+              i.icon-dribbble
+            a(href='#')
+              i.icon-flickr
+          // End of Content
+        // End of Grey Container
+        // BOTTOM LOGO SECTION
+        footer
+          // Start of Bottom Logo - Where the logo be
+          .bottom-logo
+            img(src='/images/bottom_logo.png', alt='bottom logo')
+            p Copyright 2014
+          // End of Bottom Logo
+      // End of Container
+    // End of Wrapper
+
+    // Page Script
+    script(src="/javascripts/index.js")
