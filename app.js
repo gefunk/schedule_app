@@ -51,6 +51,7 @@ MongoClient.connect(mongourl, function(err, mongodb){
 
 
 	app.get('/', routes.index);
+    app.get('/docs', routes.docs);
 	app.get('/users', user.list);
 	
 	// find ports
@@ -60,7 +61,7 @@ MongoClient.connect(mongourl, function(err, mongodb){
 
 	// find vessels
 	app.get('/vessels', vessels.list(mongodb));
-	app.get('/vessels/name/:name', vessels.find_by_name(mongodb));
+	app.get('/vessels/search/:name', vessels.find_by_name(mongodb));
 	
 	// find schedules
 	app.post('/', schedules.lookup(mongodb))

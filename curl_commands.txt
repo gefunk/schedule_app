@@ -1,0 +1,14 @@
+# query only voyage
+curl -d '{"voyage":"N006"}' -H 'content-type:application/json' "http://localhost:3000/"
+# query by vessel
+curl -d '{"vessel":"MSC CHALLENGER"}' -H 'content-type:application/json' "http://localhost:3000/"
+
+curl -d '{"start_port":"Durban", "end_port":"Rotterdam"}' -H 'content-type:application/json' "http://schedules.amfitir.com/"
+
+
+db.schedules.find({"$and":[{"voyages.ports.port" : "Durban" }, {"voyages.ports.port":"Rotterdam"}]}).sort({"voyages.ports.port.eta":1}).pretty()
+
+db.schedules.find({ carrier: /maersk/i,vessel: /mary maersk/i,'voyages.voyage': /1403/i }, {'voyages.voyage.$': 1 });
+
+
+http://pcr-repo/artifactory/libs-releases-local/resin-pro/resin-pro/3.1.s120510/resin-pro-3.1.s120510.tar.gz

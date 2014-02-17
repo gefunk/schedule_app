@@ -1,30 +1,10 @@
-extends layout
+extends indexlayout
 
 block content   
     // Scroll To Top
     a#toTop(href='#top')
     // HEADER SECTION
-    header
-      // Start of Header - full width area with class for the headroom JS hiding
-      .header.navbar-fixed-top
-        // Start of Header Container - the content div that is a set width and centralized
-        .header-container
-          // Logo - it's the logo image
-          .logo
-            img(src='/images/logo.png', alt='top logo')
-          // End of Logo
-          // Menu - You can pretty much guess that the menu div is where the menu is contained
-          .menu
-            ul
-              li
-                a.cta(href='#') Buy Now
-              li
-                a(href='#') About Us
-              li
-                a(href='#') Support
-          // End of Menu
-        // End of Header Container
-      // End of Header
+    include header
     // TOP SECTION
     // Start of Background - the top image that gets covered when you scroll
     #background
@@ -32,8 +12,8 @@ block content
       .shade
         // Start of Main Title + Intro
         .huge-title
-          h1 Flexi Landing Page.
-          h4 Unlimited Possibilities. Modular Design.
+          h1 Amfitir Schedules.
+          h4 Unlimited Possibilities. Open API.
           // Start of Owl Carousel - The carousel can contain anything in each DIV and you can add more but change the settings at the bottom of the page for number of items
           .testimonials.owl-carousel
             div

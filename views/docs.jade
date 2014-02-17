@@ -1,0 +1,141 @@
+extends layout
+
+
+
+block content   
+    script(src="/javascripts/prettify/prettify.js")
+    script(src="/javascripts/docs.js")
+    style.
+        div.content {
+            text-align:left;
+        }
+        input{
+            background-color: #FFFFFF;
+            border: 2px solid #5F7589;
+            color: #5F7589;
+            display: inline;
+            font-family: 'Raleway',sans-serif;
+            font-size: 12px;
+            padding: 8px;
+            width: 25%;
+        }
+        button.clear {
+            background-color: #304252;
+            border: 2px solid #304252;
+            color: #FFFFFF;
+            display: none;
+            font-family: 'Raleway',sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-align: center;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: all 0.3s ease-in-out 0s;
+            cursor: pointer;
+        }
+        
+    .wrapper
+        .container
+            .greycontainer
+                .content
+                    h3 JQuery Examples
+                    h4 List All Ports
+                    p This will return a listing of all the ports
+                    pre.prettyprint.
+                        var ports_url = "http://schedules.amfitir.com/ports";
+                        $.getJSON(ports_url,
+                            function(data) {
+                                // do something with data here
+                                console.log(data);
+                        });
+                    h5 example
+                    pre.prettyprint.
+                        {
+                                "_id": "52fbd6148e04800e6d55d042", // internal id - will never be used
+                                "info": { // info object is information from UN Loccode and other GIS databases
+                                    "multimodal": 0, 
+                                    "country_code": "SG",
+                                    "search_term": "Singapore SGSIN SG SINGAPORE", // any of these terms are searchable
+                                    "id": 61210,
+                                    "loc": null,
+                                    "border_crossing": 0,
+                                    "map_geocode": 1,
+                                    "subdiv": null,
+                                    "location": "",
+                                    "latitude": 1.29016, // can be used with any mapping software
+                                    "port_code_c": "SGSIN", // port code can be used to look up ports
+                                    "last_geocode": null,
+                                    "rail": 0,
+                                    "wp_url": null,
+                                    "subdiv2": null,
+                                    "state_code": null,
+                                    "population": 3547809,
+                                    "name": "Singapore",
+                                    "longitude": 103.852, // can be used with any mapping software
+                                    "ocean": 1, // signifies whether this is an ocean port
+                                    "airport": 1,
+                                    "hit_count": 0,
+                                    "found": 1,
+                                    "port_code": "SIN", // 3 Letter Port code
+                                    "road": 0
+                                },
+                                "name": "Singapore" // this is the name of the port from the Sailing Schedule source
+                            }
+                    h5 results
+                    button#clear-get-ports.clear Clear
+                    div#port-result
+                    .button-box
+                        a#get-ports.button(href="#") Run It!
+                    // Get by port name
+                    h4 Search for a port
+                    p You can search for a port, by providing any part of a port name or port code
+                    pre.prettyprint.
+                        var port_query = "USSAV";
+                        var ports_url = "http://schedules.amfitir.com/ports/search/"+port_query;
+                        $.getJSON(ports_url,
+                            function(data) {
+                                // do something with data here
+                                console.log(data);
+                        });
+                    h5 example
+                    input#search-for-port(placeholder="search for a port...")
+                    button#clear-search-ports.clear Clear
+                    div#port-search-result.
+                    .button-box
+                        a#search-ports.button(href="#") Run It!
+                        
+                    // All Vessels
+                    h4 List All Vessels
+                    p This will return a listing of all the vessels
+                    pre.prettyprint.
+                        var ports_url = "http://schedules.amfitir.com/vessels";
+                        $.getJSON(ports_url,
+                            function(data) {
+                                // do something with data here
+                                console.log(data);
+                        });
+                    h5 example
+                    button#clear-get-vessels.clear Clear
+                    div#vessels-result
+                    .button-box
+                        a#get-vessels.button(href="#") Run It!
+                    
+                    // Get by vessel name
+                    h4 Search for a vessel
+                    p You can search for a vessel by provding part or whole Vessel Name
+                    pre.prettyprint.
+                        var vessel_query = "MAERSK";
+                        var vessel_url = "http://schedules.amfitir.com/vessels/search/"+vessel_query;
+                        $.getJSON(vessel_url,
+                            function(data) {
+                                // do something with data here
+                                console.log(data);
+                        });
+                    h5 example
+                    input#search-for-vessel(placeholder="search for a vessel...")
+                    button#clear-search-vessel.clear Clear
+                    div#vessel-search-result.
+                    .button-box
+                        a#search-ports.button(href="#") Run It!
+                    
