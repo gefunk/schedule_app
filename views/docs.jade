@@ -49,7 +49,7 @@ block content
                                 // do something with data here
                                 console.log(data);
                         });
-                    h5 example
+                    h5 example response
                     pre.prettyprint.
                         {
                                 "_id": "52fbd6148e04800e6d55d042", // internal id - will never be used
@@ -82,7 +82,7 @@ block content
                                 },
                                 "name": "Singapore" // this is the name of the port from the Sailing Schedule source
                             }
-                    h5 results
+                    h5 example
                     button#clear-get-ports.clear Clear
                     div#port-result
                     .button-box
@@ -122,8 +122,8 @@ block content
                         a#get-vessels.button(href="#") Run It!
                     
                     // Get by vessel name
-                    h4 Search for a vessel
-                    p You can search for a vessel by provding part or whole Vessel Name
+                    h4 All voyages for a Vessel
+                    p You can get all voyages for a vessel by provding part or whole Vessel Name. This will return all voyages for the entire year
                     pre.prettyprint.
                         var vessel_query = "MAERSK";
                         var vessel_url = "http://schedules.amfitir.com/vessels/search/"+vessel_query;
@@ -137,5 +137,450 @@ block content
                     button#clear-search-vessel.clear Clear
                     div#vessel-search-result.
                     .button-box
-                        a#search-ports.button(href="#") Run It!
+                        a#search-vessel.button(href="#") Run It!
+                    
+                    
+                    // Search Schedules
+                    h4 Search Schedules
+                    p. 
+                        Given a start port, end port, start date and end date, you will be able to retrieve all voyages which fit those parameters. 
+                        If start_date (when the ship leaves the start port) and end_date (when the ship arrives at the destination port) are provided then 
+                        only voyages within those dates will be returned. The response will be sorted by date.
+                    pre.prettyprint.
+                        var schedule_url = "http://schedules.amfitir.com/";
+                        $.post(ports_url,
+                            {
+                                start_port: "Durban", // can be name, port code, must resolve to 1 port
+                                end_port: "Rotterdam", // use search for port to determine the appropriate port name
+                                start_date: "2014-02-17", // must be in YYYY-MM-DD format
+                                end_date: "2014-05-01" // must be in YYYY-MM-DD format
+                            }
+                            function(data) {
+                                // do something with data here
+                                console.log(data);
+                        });
+                    h5 example reponse
+                    pre.prettyprint.
+                        [
+                            {
+                                "carrier": "Maersk", // name of the carrier
+                                "voyage": "142B", // voyage
+                                "update_date": "2014-02-12T20:13:53.633Z", // when this schedule was sourced
+                                "source": "http://sailingschedules2.maerskline.com/MaerskSailingSchedulesCustomerWeb/CustomerWebServlet?ssaction=com.saf.ss.cust.action.route.ShowSchedule&routeID=2093&format=html&liveworking=LIVE",
+                                "vessel": "KATHERINE", // name of the vessel
+                                "route": [
+                                    /*
+                                    This array is sorted by earliest ETA date
+                                    This is the order in which the vessel will visit each port
+                                    */
+                                    {
+                                        "port_info": {
+                                            "latitude": -29.8556,
+                                            "port_code": "ZADUR",
+                                            "city_code": "DUR",
+                                            "longitude": 31.0344,
+                                            "country_code": "ZA"
+                                        },
+                                        "eta": "2014-02-21T00:00:00.000Z",
+                                        "port": "Durban",
+                                        "etd": "2014-02-23T00:00:00.000Z"
+                                    },
+                                    {
+                                        "port_info": {
+                                            "latitude": -33.9625,
+                                            "port_code": "ZAPLZ",
+                                            "city_code": "PLZ",
+                                            "longitude": 25.6233,
+                                            "country_code": "ZA"
+                                        },
+                                        "eta": "2014-02-26T00:00:00.000Z",
+                                        "port": "Port Elizabeth",
+                                        "etd": "2014-02-26T00:00:00.000Z"
+                                    },
+                                    {
+                                        "port_info": {
+                                            "latitude": -33.9191,
+                                            "port_code": "ZACPT",
+                                            "city_code": "CPT",
+                                            "longitude": 18.422,
+                                            "country_code": "ZA"
+                                        },
+                                        "eta": "2014-03-02T00:00:00.000Z",
+                                        "port": "Cape Town",
+                                        "etd": "2014-03-03T00:00:00.000Z"
+                                    },
+                                    {
+                                        "port_info": {
+                                            "latitude": 36.1276,
+                                            "port_code": "ESALG",
+                                            "city_code": "ALG",
+                                            "longitude": -5.45279,
+                                            "country_code": "ES"
+                                        },
+                                        "eta": "2014-03-16T00:00:00.000Z",
+                                        "port": "Algeciras",
+                                        "etd": "2014-03-16T00:00:00.000Z"
+                                    },
+                                    {
+                                        "port_info": {
+                                            "latitude": 51.9229,
+                                            "port_code": "NLRTM",
+                                            "city_code": "RTM",
+                                            "longitude": 4.47846,
+                                            "country_code": "NL"
+                                        },
+                                        "eta": "2014-03-19T00:00:00.000Z",
+                                        "port": "Rotterdam",
+                                        "etd": "2014-03-21T00:00:00.000Z"
+                                    }
+                                ]
+                            },
+                            {
+                                "carrier": "Maersk",
+                                "voyage": "142B",
+                                "update_date": "2014-02-12T20:13:53.620Z",
+                                "source": "http://sailingschedules2.maerskline.com/MaerskSailingSchedulesCustomerWeb/CustomerWebServlet?ssaction=com.saf.ss.cust.action.route.ShowSchedule&routeID=2093&format=html&liveworking=LIVE",
+                                "vessel": "KEA",
+                                "route": [
+                                    {
+                                        "port_info": {
+                                            "latitude": -29.8556,
+                                            "port_code": "ZADUR",
+                                            "city_code": "DUR",
+                                            "longitude": 31.0344,
+                                            "country_code": "ZA"
+                                        },
+                                        "eta": "2014-02-28T00:00:00.000Z",
+                                        "port": "Durban",
+                                        "etd": "2014-03-02T00:00:00.000Z"
+                                    },
+                                    {
+                                        "port_info": {
+                                            "latitude": -33.9625,
+                                            "port_code": "ZAPLZ",
+                                            "city_code": "PLZ",
+                                            "longitude": 25.6233,
+                                            "country_code": "ZA"
+                                        },
+                                        "eta": "2014-03-05T00:00:00.000Z",
+                                        "port": "Port Elizabeth",
+                                        "etd": "2014-03-05T00:00:00.000Z"
+                                    },
+                                    {
+                                        "port_info": {
+                                            "latitude": -33.9191,
+                                            "port_code": "ZACPT",
+                                            "city_code": "CPT",
+                                            "longitude": 18.422,
+                                            "country_code": "ZA"
+                                        },
+                                        "eta": "2014-03-09T00:00:00.000Z",
+                                        "port": "Cape Town",
+                                        "etd": "2014-03-10T00:00:00.000Z"
+                                    },
+                                    {
+                                        "port_info": {
+                                            "latitude": 36.1276,
+                                            "port_code": "ESALG",
+                                            "city_code": "ALG",
+                                            "longitude": -5.45279,
+                                            "country_code": "ES"
+                                        },
+                                        "eta": "2014-03-23T00:00:00.000Z",
+                                        "port": "Algeciras",
+                                        "etd": "2014-03-23T00:00:00.000Z"
+                                    },
+                                    {
+                                        "port_info": {
+                                            "latitude": 51.9229,
+                                            "port_code": "NLRTM",
+                                            "city_code": "RTM",
+                                            "longitude": 4.47846,
+                                            "country_code": "NL"
+                                        },
+                                        "eta": "2014-03-26T00:00:00.000Z",
+                                        "port": "Rotterdam",
+                                        "etd": "2014-03-28T00:00:00.000Z"
+                                    }
+                                ]
+                            },
+                            {
+                                "carrier": "Maersk",
+                                "voyage": "142B",
+                                "update_date": "2014-02-12T20:13:53.628Z",
+                                "source": "http://sailingschedules2.maerskline.com/MaerskSailingSchedulesCustomerWeb/CustomerWebServlet?ssaction=com.saf.ss.cust.action.route.ShowSchedule&routeID=2093&format=html&liveworking=LIVE",
+                                "vessel": "MOL CULLINAN",
+                                "route": [
+                                    {
+                                        "port_info": {
+                                            "latitude": -29.8556,
+                                            "port_code": "ZADUR",
+                                            "city_code": "DUR",
+                                            "longitude": 31.0344,
+                                            "country_code": "ZA"
+                                        },
+                                        "eta": "2014-03-08T00:00:00.000Z",
+                                        "port": "Durban",
+                                        "etd": "2014-03-10T00:00:00.000Z"
+                                    },
+                                    {
+                                        "port_info": {
+                                            "latitude": -33.9625,
+                                            "port_code": "ZAPLZ",
+                                            "city_code": "PLZ",
+                                            "longitude": 25.6233,
+                                            "country_code": "ZA"
+                                        },
+                                        "eta": "2014-03-12T00:00:00.000Z",
+                                        "port": "Port Elizabeth",
+                                        "etd": "2014-03-12T00:00:00.000Z"
+                                    },
+                                    {
+                                        "port_info": {
+                                            "latitude": -33.9191,
+                                            "port_code": "ZACPT",
+                                            "city_code": "CPT",
+                                            "longitude": 18.422,
+                                            "country_code": "ZA"
+                                        },
+                                        "eta": "2014-03-16T00:00:00.000Z",
+                                        "port": "Cape Town",
+                                        "etd": "2014-03-17T00:00:00.000Z"
+                                    },
+                                    {
+                                        "port_info": {
+                                            "latitude": 36.1276,
+                                            "port_code": "ESALG",
+                                            "city_code": "ALG",
+                                            "longitude": -5.45279,
+                                            "country_code": "ES"
+                                        },
+                                        "eta": "2014-03-30T00:00:00.000Z",
+                                        "port": "Algeciras",
+                                        "etd": "2014-03-30T00:00:00.000Z"
+                                    },
+                                    {
+                                        "port_info": {
+                                            "latitude": 51.9229,
+                                            "port_code": "NLRTM",
+                                            "city_code": "RTM",
+                                            "longitude": 4.47846,
+                                            "country_code": "NL"
+                                        },
+                                        "eta": "2014-04-02T00:00:00.000Z",
+                                        "port": "Rotterdam",
+                                        "etd": "2014-04-03T00:00:00.000Z"
+                                    }
+                                ]
+                            },
+                            {
+                                "carrier": "Maersk",
+                                "voyage": "142B",
+                                "update_date": "2014-02-12T20:13:53.642Z",
+                                "source": "http://sailingschedules2.maerskline.com/MaerskSailingSchedulesCustomerWeb/CustomerWebServlet?ssaction=com.saf.ss.cust.action.route.ShowSchedule&routeID=2093&format=html&liveworking=LIVE",
+                                "vessel": "RHODOS",
+                                "route": [
+                                    {
+                                        "port_info": {
+                                            "latitude": -29.8556,
+                                            "port_code": "ZADUR",
+                                            "city_code": "DUR",
+                                            "longitude": 31.0344,
+                                            "country_code": "ZA"
+                                        },
+                                        "eta": "2014-03-22T00:00:00.000Z",
+                                        "port": "Durban",
+                                        "etd": "2014-03-24T00:00:00.000Z"
+                                    },
+                                    {
+                                        "port_info": {
+                                            "latitude": -33.9625,
+                                            "port_code": "ZAPLZ",
+                                            "city_code": "PLZ",
+                                            "longitude": 25.6233,
+                                            "country_code": "ZA"
+                                        },
+                                        "eta": "2014-03-26T00:00:00.000Z",
+                                        "port": "Port Elizabeth",
+                                        "etd": "2014-03-26T00:00:00.000Z"
+                                    },
+                                    {
+                                        "port_info": {
+                                            "latitude": -33.9191,
+                                            "port_code": "ZACPT",
+                                            "city_code": "CPT",
+                                            "longitude": 18.422,
+                                            "country_code": "ZA"
+                                        },
+                                        "eta": "2014-03-30T00:00:00.000Z",
+                                        "port": "Cape Town",
+                                        "etd": "2014-03-31T00:00:00.000Z"
+                                    },
+                                    {
+                                        "port_info": {
+                                            "latitude": 36.1276,
+                                            "port_code": "ESALG",
+                                            "city_code": "ALG",
+                                            "longitude": -5.45279,
+                                            "country_code": "ES"
+                                        },
+                                        "eta": "2014-04-13T00:00:00.000Z",
+                                        "port": "Algeciras",
+                                        "etd": "2014-04-13T00:00:00.000Z"
+                                    },
+                                    {
+                                        "port_info": {
+                                            "latitude": 51.9229,
+                                            "port_code": "NLRTM",
+                                            "city_code": "RTM",
+                                            "longitude": 4.47846,
+                                            "country_code": "NL"
+                                        },
+                                        "eta": "2014-04-16T00:00:00.000Z",
+                                        "port": "Rotterdam",
+                                        "etd": "2014-04-18T00:00:00.000Z"
+                                    }
+                                ]
+                            },
+                            {
+                                "carrier": "Maersk",
+                                "voyage": "143B",
+                                "update_date": "2014-02-12T20:13:53.624Z",
+                                "source": "http://sailingschedules2.maerskline.com/MaerskSailingSchedulesCustomerWeb/CustomerWebServlet?ssaction=com.saf.ss.cust.action.route.ShowSchedule&routeID=2093&format=html&liveworking=LIVE",
+                                "vessel": "MOL CALEDON",
+                                "route": [
+                                    {
+                                        "port_info": {
+                                            "latitude": -29.8556,
+                                            "port_code": "ZADUR",
+                                            "city_code": "DUR",
+                                            "longitude": 31.0344,
+                                            "country_code": "ZA"
+                                        },
+                                        "eta": "2014-03-29T00:00:00.000Z",
+                                        "port": "Durban",
+                                        "etd": "2014-03-31T00:00:00.000Z"
+                                    },
+                                    {
+                                        "port_info": {
+                                            "latitude": -33.9625,
+                                            "port_code": "ZAPLZ",
+                                            "city_code": "PLZ",
+                                            "longitude": 25.6233,
+                                            "country_code": "ZA"
+                                        },
+                                        "eta": "2014-04-02T00:00:00.000Z",
+                                        "port": "Port Elizabeth",
+                                        "etd": "2014-04-02T00:00:00.000Z"
+                                    },
+                                    {
+                                        "port_info": {
+                                            "latitude": -33.9191,
+                                            "port_code": "ZACPT",
+                                            "city_code": "CPT",
+                                            "longitude": 18.422,
+                                            "country_code": "ZA"
+                                        },
+                                        "eta": "2014-04-06T00:00:00.000Z",
+                                        "port": "Cape Town",
+                                        "etd": "2014-04-07T00:00:00.000Z"
+                                    },
+                                    {
+                                        "port_info": {
+                                            "latitude": 36.1276,
+                                            "port_code": "ESALG",
+                                            "city_code": "ALG",
+                                            "longitude": -5.45279,
+                                            "country_code": "ES"
+                                        },
+                                        "eta": "2014-04-20T00:00:00.000Z",
+                                        "port": "Algeciras",
+                                        "etd": "2014-04-20T00:00:00.000Z"
+                                    },
+                                    {
+                                        "port_info": {
+                                            "latitude": 51.9229,
+                                            "port_code": "NLRTM",
+                                            "city_code": "RTM",
+                                            "longitude": 4.47846,
+                                            "country_code": "NL"
+                                        },
+                                        "eta": "2014-04-23T00:00:00.000Z",
+                                        "port": "Rotterdam",
+                                        "etd": "2014-04-25T00:00:00.000Z"
+                                    }
+                                ]
+                            },
+                            {
+                                "carrier": "Maersk",
+                                "voyage": "142B",
+                                "update_date": "2014-02-12T20:13:53.638Z",
+                                "source": "http://sailingschedules2.maerskline.com/MaerskSailingSchedulesCustomerWeb/CustomerWebServlet?ssaction=com.saf.ss.cust.action.route.ShowSchedule&routeID=2093&format=html&liveworking=LIVE",
+                                "vessel": "ALEXANDRA",
+                                "route": [
+                                    {
+                                        "port_info": {
+                                            "latitude": -29.8556,
+                                            "port_code": "ZADUR",
+                                            "city_code": "DUR",
+                                            "longitude": 31.0344,
+                                            "country_code": "ZA"
+                                        },
+                                        "eta": "2014-04-05T00:00:00.000Z",
+                                        "port": "Durban",
+                                        "etd": "2014-04-07T00:00:00.000Z"
+                                    },
+                                    {
+                                        "port_info": {
+                                            "latitude": -33.9625,
+                                            "port_code": "ZAPLZ",
+                                            "city_code": "PLZ",
+                                            "longitude": 25.6233,
+                                            "country_code": "ZA"
+                                        },
+                                        "eta": "2014-04-09T00:00:00.000Z",
+                                        "port": "Port Elizabeth",
+                                        "etd": "2014-04-09T00:00:00.000Z"
+                                    },
+                                    {
+                                        "port_info": {
+                                            "latitude": -33.9191,
+                                            "port_code": "ZACPT",
+                                            "city_code": "CPT",
+                                            "longitude": 18.422,
+                                            "country_code": "ZA"
+                                        },
+                                        "eta": "2014-04-13T00:00:00.000Z",
+                                        "port": "Cape Town",
+                                        "etd": "2014-04-14T00:00:00.000Z"
+                                    },
+                                    {
+                                        "port_info": {
+                                            "latitude": 36.1276,
+                                            "port_code": "ESALG",
+                                            "city_code": "ALG",
+                                            "longitude": -5.45279,
+                                            "country_code": "ES"
+                                        },
+                                        "eta": "2014-04-27T00:00:00.000Z",
+                                        "port": "Algeciras",
+                                        "etd": "2014-04-27T00:00:00.000Z"
+                                    },
+                                    {
+                                        "port_info": {
+                                            "latitude": 51.9229,
+                                            "port_code": "NLRTM",
+                                            "city_code": "RTM",
+                                            "longitude": 4.47846,
+                                            "country_code": "NL"
+                                        },
+                                        "eta": "2014-04-30T00:00:00.000Z",
+                                        "port": "Rotterdam",
+                                        "etd": "2014-05-02T00:00:00.000Z"
+                                    }
+                                ]
+                            }
+                        ]
+                    
+                        
                     

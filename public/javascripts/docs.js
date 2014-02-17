@@ -65,9 +65,9 @@ $(document).ready(function(){
    
    
   /*
-      Search for Ports
+      Get all voyages for a vessel
   */
-  $("a#search-ports").click(function(e){
+  $("a#search-vessel").click(function(e){
       e.preventDefault();
       var query = $("input#search-for-vessel").val();
       if(query.length <= 3){
@@ -76,9 +76,9 @@ $(document).ready(function(){
       var vessels_url = "http://schedules.amfitir.com/vessels/search/"+query;
       $.getJSON(vessels_url,
         function(data) {
-              $( "div#vessel-search" ).html(  "<pre class='prettyprint lang-js'>"+JSON.stringify(data, null, 4)+"</pre>" );
+              $( "div#vessel-search-result" ).html(  "<pre class='prettyprint lang-js'>"+JSON.stringify(data, null, 4)+"</pre>" );
               prettyPrint();
-              $("button#clear-search-ports").show();
+              $("button#clear-search-vessel").show();
         });
   }); 
   
@@ -86,6 +86,14 @@ $(document).ready(function(){
       $( "div#vessel-search-result" ).html( "results will be displayed here...." );
       $("button#clear-search-vessel").hide();
   }); 
+  
+  
+  /*
+      Search schedules
+  */
+  
+  
+  
 });
 
 
