@@ -1,3 +1,4 @@
+
 header
   // Start of Header - full width area with class for the headroom JS hiding
   .header.navbar-fixed-top
@@ -11,6 +12,12 @@ header
       .menu
         ul
           li
-            a.cta(href='/') Home
+            if page == 'home'
+                a(href='/', class="cta") Home
+            else
+                a(href='/') Home
           li
-            a(href='/docs') Docs
+            if page == 'docs'
+                a(href='/docs', class="cta") Docs
+            else
+                a(href='/docs') Docs
