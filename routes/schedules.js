@@ -126,7 +126,12 @@ exports.lookup = function(db){
 			
 			
 							// respond with the header information
-							res.setHeader('Content-Type', 'application/json');
+                            var successHeaders = {
+                                'Content-Type':'application/json',
+                                'Expires' : new Date(Date.now() + 900000),
+                                'Cache-Control' : "public"
+                            }
+							res.set(successHeaders);
 							res.send(JSON.stringify(response_data));
 						});// end schedules.find
 					}else{
@@ -143,7 +148,13 @@ exports.lookup = function(db){
 		}); // end find start port
 		}else{
 			schedules.find(query, projection).toArray(function(err, docs){
-				res.setHeader('Content-Type', 'application/json');
+				// respond with the header information
+                var successHeaders = {
+                    'Content-Type':'application/json',
+                    'Expires' : new Date(Date.now() + 900000),
+                    'Cache-Control' : "public"
+                }
+				res.set(successHeaders);
 				res.send(JSON.stringify(docs));
 			});
 		}
