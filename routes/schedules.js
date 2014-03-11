@@ -1,4 +1,4 @@
-
+var url = require('url')
 
 exports.lookup = function(db){
 	return function(req, res){
@@ -7,35 +7,39 @@ exports.lookup = function(db){
 		
 		var query = {};
 		var projection = {};
-		
-		if(req.body.carrier != undefined) query['carrier'] =  new RegExp(req.body.carrier, 'i');
-		if(req.body.vessel != undefined) query['vessel'] = new RegExp(req.body.vessel, 'i');
-		if(req.body.voyage != undefined) {
-			query['voyages.voyage'] = req.body.voyage;
-			projection['voyages.voyage.$'] = 1;
-		};
-		if(req.body.start_port != undefined) start_port = req.body.start_port;
-		if(req.body.end_port != undefined) end_port = req.body.end_port;
-		if(req.body.start_date != undefined){
-			// date expected to be passed in as YYYY-MM-DD
-			var strDate = req.body.start_date;
-			var dateParts = strDate.split("-");
-			start_date = new Date(dateParts[0], (dateParts[1] - 1), dateParts[2]);
-            query['ports.etd'] = {"$gte": start_date}
-		} 
-		if(req.body.end_date != undefined){
-			// date expected to be passed in as YYYY-MM-DD
-			var strDate = req.body.end_date;
-			var dateParts = strDate.split("-");
-			end_date = new Date(dateParts[0], (dateParts[1] - 1), dateParts[2]);
-		} 
-		
+        
+        if(req.method=='POST'){
+    		if(req.body.carrier != undefined) query['carrier'] =  new RegExp(req.body.carrier, 'i');
+    		if(req.body.vessel != undefined) query['vessel'] = new RegExp(req.body.vessel, 'i');
+    		if(req.body.voyage != undefined) {
+    			query['voyages.voyage'] = req.body.voyage;
+    			projection['voyages.voyage.$'] = 1;
+    		};
+    		if(req.body.start_port != undefined) start_port = req.body.start_port;
+    		if(req.body.end_port != undefined) end_port = req.body.end_port;
+    		if(req.body.start_date != undefined) query['ports.etd'] = {"$gte": date_parse(req.body.start_date)};
+    		if(req.body.end_date != undefined) end_date = date_parse(req.body.end_date);
+        }else if(req.method == 'GET'){
+            var url_parts = url.parse(req.url, true);
+            var getquery = url_parts.query;
+    		if(getquery.carrier != undefined) getquery['carrier'] =  new RegExp(decodeURIComponent(getquery.carrier), 'i');
+    		if(getquery.vessel != undefined) getquery['vessel'] = new RegExp(decodeURIComponent(getquery.vessel), 'i');
+    		if(getquery.voyage != undefined) {
+    			getquery['voyages.voyage'] = decodeURIComponent(getquery.voyage);
+    			projection['voyages.voyage.$'] = 1;
+    		};
+    		if(getquery.start_port != undefined) start_port = decodeURIComponent(getquery.start_port).trim();
+    		if(getquery.end_port != undefined) end_port = decodeURIComponent(getquery.end_port).trim();
+    		if(getquery.start_date != undefined) query['ports.etd'] = {"$gte": date_parse(getquery.start_date)};
+    		if(getquery.end_date != undefined) end_date = date_parse(getquery.end_date);
+        }
 		
 		
 		var schedules = db.collection("schedules");
 		var ports_collection = db.collection("ports");
 		
 		if(start_port && end_port){
+
 			// look up port in port collection, by search term, this will qualify name, port code, etc...
 			ports_collection.findOne({"info.search_term": new RegExp(start_port, 'i')}, function(err, docs){
 				if(docs != null){
@@ -123,8 +127,7 @@ exports.lookup = function(db){
 									return 1;
 								return 0;
 							});
-			
-			
+			                
 							// respond with the header information
                             var successHeaders = {
                                 'Content-Type':'application/json',
@@ -163,3 +166,11 @@ exports.lookup = function(db){
 		
 	};
 };
+
+/*
+* parse a date string passed in through the url or post
+*/
+function date_parse(strDate){
+	var dateParts = strDate.split("-");
+	return new Date(dateParts[0], (dateParts[1] - 1), dateParts[2]);
+}
