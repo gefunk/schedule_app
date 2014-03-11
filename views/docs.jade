@@ -148,7 +148,7 @@ block content
                         only voyages within those dates will be returned. The response will be sorted by date.
                     pre.prettyprint.
                         var schedule_url = "http://schedules.amfitir.com/find";
-                        $.get(ports_url,
+                        $.get(schedule_url,
                             {
                                 start_port: "Durban", // can be name, port code, must resolve to 1 port
                                 end_port: "Rotterdam", // use search for port to determine the appropriate port name
