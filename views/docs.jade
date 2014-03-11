@@ -147,8 +147,8 @@ block content
                         If start_date (when the ship leaves the start port) and end_date (when the ship arrives at the destination port) are provided then 
                         only voyages within those dates will be returned. The response will be sorted by date.
                     pre.prettyprint.
-                        var schedule_url = "http://schedules.amfitir.com/";
-                        $.post(ports_url,
+                        var schedule_url = "http://schedules.amfitir.com/find";
+                        $.get(ports_url,
                             {
                                 start_port: "Durban", // can be name, port code, must resolve to 1 port
                                 end_port: "Rotterdam", // use search for port to determine the appropriate port name
