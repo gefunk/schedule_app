@@ -65,7 +65,8 @@ MongoClient.connect(mongourl, function(err, mongodb){
 	
 	// find schedules
 	app.post('/', schedules.lookup(mongodb))
-
+    app.get('/find', schedules.lookup(mongodb))
+    
 	http.createServer(app).listen(app.get('port'), function(){
 	  console.log('Express server listening on port ' + app.get('port'));
 	});
