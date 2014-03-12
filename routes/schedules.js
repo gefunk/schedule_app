@@ -43,12 +43,14 @@ exports.lookup = function(db){
 			// look up port in port collection, by search term, this will qualify name, port code, etc...
 			ports_collection.findOne({"info.search_term": new RegExp(start_port, 'i')}, function(err, docs){
 				if(docs != null){
-					start_port = docs.name;
+                    //console.log("Start Port", docs);
+					start_port = docs.info.port_code_c;
 					ports_collection.findOne({"info.search_term": new RegExp(end_port, 'i')}, function(err, docs){
 					if(docs != null){
-						end_port = docs.name;
+						end_port = docs.info.port_code_c;
+                        
 						// generate schedule query - using start port, end port and query params above
-						var and = [{"ports.port": new RegExp(start_port, 'i')}, {"ports.port": new RegExp(end_port, 'i')}];
+						var and = [{"ports.port_info.port_code": start_port}, {"ports.port_info.port_code": end_port}];
 						query["$and"] = and;
 						var options = {"sort":"ports.eta"};
 						schedules.find(query, options).toArray(function(err, docs){
@@ -58,7 +60,7 @@ exports.lookup = function(db){
                             
 							for(var voyage in docs){
 								var ports = docs[voyage]['ports'];
-				
+                                
 								// sort the ports by eta
 								ports.sort(function(a,b){
 								    if (a.eta < b.eta)
@@ -67,7 +69,6 @@ exports.lookup = function(db){
 								      return 1;
 								    return 0;
 								});
-				
 								var route_data = [];
 								var start_port_etd = null;
 								var end_port_eta = null;
@@ -78,10 +79,10 @@ exports.lookup = function(db){
 								*/
 								for (var pindex in ports){
                                     
-									if(ports[pindex]['port'].toUpperCase() == start_port.toUpperCase()){
+									if(ports[pindex]['port_info']["port_code"].toUpperCase() == start_port.toUpperCase()){
 										start_port_found = true;
 										start_port_etd = ports[pindex]['etd'];
-									}else if(ports[pindex]['port'].toUpperCase() == end_port.toUpperCase()){
+									}else if(ports[pindex]['port_info']["port_code"].toUpperCase() == end_port.toUpperCase()){
 										end_port_eta = ports[pindex]['eta'];
 										// if we found the start port before 
 										// we find the end port
@@ -127,7 +128,6 @@ exports.lookup = function(db){
 									return 1;
 								return 0;
 							});
-			                
 							// respond with the header information
                             var successHeaders = {
                                 'Content-Type':'application/json',
